@@ -2,8 +2,13 @@
 /*
 !/vibe-mentor/
 !/README.md
+!/LICENSE
 !/tools/
+!/tests/
 !/.gitignore
+
+# Local reference material, never published (anchored: vibe-mentor/references/ stays tracked)
+/references/
 
 # Python noise inside the skill
 __pycache__/

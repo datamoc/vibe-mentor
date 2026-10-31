@@ -6,9 +6,9 @@ The scripts in `scripts/` are accelerators, never requirements. Every check has 
 
 | Level | Typical environment | What to do |
 |---|---|---|
-| **A. Shell + files + Python** | Claude Code CLI, Claude Desktop "Code" tab | Use the scripts. |
+| **A. Shell + files + Python** | A coding agent in a terminal, or a desktop app with a code or workspace mode | Use the scripts. |
 | **B. Shell + files, no Python** | Same, on a machine without Python | Use the shell commands in section 2. Suggest installing Python only if the user wants the scripts. |
-| **C. Chat with a code sandbox, no access to the user's disk** | Claude Desktop / claude.ai chat with code execution and uploads | Ask for a zip of the repository (or the key files); run the scripts on the upload; give the user the commands to run locally. |
+| **C. Chat with a code sandbox, no access to the user's disk** | A chat assistant with code execution and file uploads | Ask for a zip of the repository (or the key files); run the scripts on the upload; give the user the commands to run locally. |
 | **D. Chat with no tools at all** | Plain chat | Manual mode: section 3. |
 
 Detect the level by what you can actually do (try a harmless command, or notice no file or shell tool is available). Do not assume.

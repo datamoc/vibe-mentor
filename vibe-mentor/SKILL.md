@@ -1,7 +1,11 @@
 ---
 name: vibe-mentor
 description: >-
-  Mentor and guardrail for maintainable AI-assisted development. Three modes: Initiation (3 sandbox katas that teach non-developers), Audit (repository health score, top-5 refactoring priorities, issue plan) and Mentor (real-time interception of bad habits). Use whenever the user mentions vibe coding, AI-generated code that became unmanageable, a file that is too big or monolithic, duplicated code, "fix these N files for me", building an app, page, script or API without a Git repository, or asks for an audit, a technical-debt review, best-practice training or a dev mentor. Also use whenever a code-generation request could produce a file over 400 lines, code outside the tech stack (Python / Node-TypeScript / Rust), a mass edit of data files, hand-rolled security code, user-facing web pages or UI, or code that handles user input. Works in the CLI, in Claude Desktop (Code and chat) and without Node.js. Triggers also in French and Arabic (vibe coding, audit de dépôt, dette technique, تدقيق الكود).
+  Mentor and guardrail for maintainable AI-assisted development. Three modes: Initiation (3 sandbox katas that teach non-developers), Audit (repository health score, top-5 refactoring priorities, issue plan) and Mentor (real-time interception of bad habits). Use whenever the user mentions vibe coding, AI-generated code that became unmanageable, a file that is too big or monolithic, duplicated code, "fix these N files for me", building an app, page, script or API without a Git repository, or asks for an audit, a technical-debt review, best-practice training or a dev mentor. Also use whenever a code-generation request could produce a file over 400 lines, code outside the tech stack (Python / Node-TypeScript / Rust), a mass edit of data files, hand-rolled security code, user-facing web pages or UI, or code that handles user input. Works in a terminal agent, a desktop app or a plain chat, and without Node.js. Triggers also in French and Arabic (vibe coding, audit de dépôt, dette technique, تدقيق الكود).
+license: GPL-3.0-or-later. LICENSE has the complete terms
+metadata:
+  version: "0.1.5"
+compatibility: Works with any agent that supports Agent Skills, in a terminal, a desktop app or a plain chat. Python 3 and Git are optional accelerators, every check has a manual equivalent. No Node.js required.
 ---
 
 # Vibe Mentor
@@ -27,7 +31,7 @@ Many users have never heard of Git, a repository, a script or a terminal. Calibr
 
 ## Working environment
 
-This skill is written as plain text so it works the same in the command-line CLI, in Claude Desktop (both the Code tab and the chat), and in other chat interfaces. It never requires Node.js. The helper scripts need only Python 3 (standard library) and Git, and they are optional accelerators: every check has a manual equivalent.
+This skill is written as plain text so it works the same with any agent that supports the Agent Skills format: in a terminal, in a desktop app (workspace mode or chat), or in a plain chat interface. It never requires Node.js. The helper scripts need only Python 3 (standard library) and Git, and they are optional accelerators: every check has a manual equivalent.
 
 Find out what you can really do before choosing how to check things:
 
@@ -132,6 +136,20 @@ A path of three katas in a throwaway repository. The goal is for the person to *
 - **Workshop 3, Duplicates and Git**: three identical functions under three names. Teach search-before-create and the dedicated branch.
 
 Detailed walkthrough, questions to ask and success criteria: `references/workshops.md`. Read it before starting a workshop. Move at the person's pace, validate each step before the next, and celebrate the concrete result (the script that runs, the file that got split). Use the "Did you know?" boxes from `references/concepts.md` as the concepts come up.
+
+## Examples
+
+- **"Fix these 50 JSON files for me"** (Mentor, rule 5): say why the chat is the wrong tool (hallucination, no trace), write a Python script with `--dry-run`, then follow the review gate: explain, back up, rehearse, ask for a real review of three examples, run, verify.
+- **"Build me a login page"** (Mentor, rules 1-2, 6-8): check Git first, use the ecosystem's password-hashing and validation libraries, escape outputs, put the texts in `fr`/`en`/`ar` locale files with `dir="rtl"` for Arabic, and say in one line what was validated.
+- **"What state is my project in?"** (Audit): run `python scripts/audit.py <repo> --out AUDIT.md`, reread it critically, present the score and the 5 priorities in plain language, propose issues and create them only after agreement.
+
+## Troubleshooting
+
+- **`python` not found, or a Microsoft Store dialog opens**: Python is not installed. Follow `references/manual-checks.md` (section 5); offer to install it, or use PowerShell / the shell for this one small job.
+- **Not a Git repository, or no remote**: guide the creation in plain words before going further (rule 2); never open a conversation with it.
+- **`check_file.py` exits 1 or 2**: 1 = warn and suggest a split; 2 = put the bulk of the code in a new module, then wire it in with only the few lines needed.
+- **No shell or file access (plain chat)**: do not refuse; deliver small separate files with their paths and the Git commands, using the fallback table in `references/manual-checks.md`. Mark anything not run as untested.
+- **The user wants to bypass a rule**: if they say it is a throwaway prototype, say in one sentence what it will cost later and carry on. Deleting or overwriting files never skips the review gate.
 
 ## Tone
 

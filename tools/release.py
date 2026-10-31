@@ -29,8 +29,8 @@ FIXED_TIME = (2020, 1, 1, 0, 0, 0)  # same input -> same zip, whatever the build
 
 NOTES = """Download `vibe-mentor-{version}.zip` below.
 
-- **Claude Desktop**: Settings, then upload the zip as a skill.
-- **Claude Code**: unzip it into `.claude/skills/vibe-mentor/`.
+- **Agent with a skills screen**: upload the zip there and switch the skill on.
+- **Agent that reads a skills folder**: unzip it so that `vibe-mentor/` sits in the agent's skills directory.
 
 Modes: Initiation (practice exercises), Audit (repository score and priorities), Mentor (real-time guardrails).
 """
@@ -52,17 +52,40 @@ def skill_files():
     return sorted(files)
 
 
+def add_entry(zf: zipfile.ZipFile, arcname: str, path: Path):
+    info = zipfile.ZipInfo(arcname, FIXED_TIME)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = 0o644 << 16
+    zf.writestr(info, path.read_bytes())
+
+
 def build_zip(target: Path):
-    files = skill_files()
+    """Write the skill zip and return the number of files in it."""
     if not (SKILL_DIR / "SKILL.md").is_file():
         sys.exit("vibe-mentor/SKILL.md not found: wrong folder?")
+    entries = {path.relative_to(ROOT).as_posix(): path for path in skill_files()}
+    license_file = ROOT / "LICENSE"  # GPL: the license text must travel with every copy
+    if license_file.is_file():
+        entries["vibe-mentor/LICENSE"] = license_file
     with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as zf:
-        for path in files:
-            info = zipfile.ZipInfo(path.relative_to(ROOT).as_posix(), FIXED_TIME)
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.external_attr = 0o644 << 16
-            zf.writestr(info, path.read_bytes())
-    return len(files)
+        for arcname, path in entries.items():
+            add_entry(zf, arcname, path)
+    return len(entries)
+
+
+def set_skill_version(version: str) -> bool:
+    """Write the version in SKILL.md (metadata.version). Return True if the file changed."""
+    path = SKILL_DIR / "SKILL.md"
+    with open(path, encoding="utf-8", newline="") as f:
+        text = f.read()
+    new_text, count = re.subn(r'(?m)^(  version: )"[^"\n]*"', rf'\g<1>"{version}"', text, count=1)
+    if count != 1:
+        sys.exit('SKILL.md has no `metadata:` / `  version: "..."` line to update.')
+    if new_text == text:
+        return False
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        f.write(new_text)
+    return True
 
 
 def check_ready(version: str):
@@ -97,9 +120,16 @@ def main():
             count = build_zip(Path(tmp) / name)
             size = (Path(tmp) / name).stat().st_size
         print(f"Rehearsal OK: {name} would contain {count} files ({size} bytes).")
+        print(f"SKILL.md metadata.version would be set to {args.version} (committed and pushed), LICENSE added to the zip.")
         print(f"Tag {tag} would be created from {BRANCH} and published as the latest release.")
         print("Nothing was published. Re-run with --publish to do it.")
         return
+
+    if set_skill_version(args.version):  # the zip must carry the version it is published under
+        run("git", "add", "vibe-mentor/SKILL.md")
+        run("git", "commit", "-m", f"Release {args.version}")
+        run("git", "push", "origin", BRANCH)
+        print(f"SKILL.md version set to {args.version}, committed and pushed.")
 
     OUT_DIR.mkdir(exist_ok=True)
     zip_path = OUT_DIR / name

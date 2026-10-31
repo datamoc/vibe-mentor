@@ -1,0 +1,23 @@
+[
+  {"query": "My vibe-coded app has become unmanageable, there is one file with 1500 lines and I don't dare touch it. Where do I start?", "should_trigger": true},
+  {"query": "Audit my repository at ~/projects/shop and tell me what to fix first", "should_trigger": true},
+  {"query": "Fix the formatting of these 60 JSON config files for me, one by one", "should_trigger": true},
+  {"query": "I'm a beginner and I want to learn good practices for building things with AI", "should_trigger": true},
+  {"query": "Build me a web page with a signup form and a login", "should_trigger": true},
+  {"query": "écris-moi un script qui renomme 200 fichiers dans mon dossier Documents", "should_trigger": true},
+  {"query": "mon code est un vrai bazar, peux-tu faire un audit de dette technique de mon projet ?", "should_trigger": true},
+  {"query": "I copied the same function into three different files, help me clean this up", "should_trigger": true},
+  {"query": "Write a login system with password storage for my Node.js app", "should_trigger": true},
+  {"query": "Je débute, je n'ai jamais utilisé Git, je veux créer une petite application pour mon équipe", "should_trigger": true},
+
+  {"query": "What is the capital of Australia and roughly how many people live there?", "should_trigger": false},
+  {"query": "Translate this paragraph into Spanish: The meeting has been moved to Thursday at 3 pm.", "should_trigger": false},
+  {"query": "Write a short poem about autumn in the mountains", "should_trigger": false},
+  {"query": "Summarize this meeting transcript in five bullet points", "should_trigger": false},
+  {"query": "Draft a polite email to my landlord about a broken heater", "should_trigger": false},
+  {"query": "Explain how photosynthesis works to a ten-year-old", "should_trigger": false},
+  {"query": "Plan a three-day trip to Lisbon with a moderate budget", "should_trigger": false},
+  {"query": "Quelle est la différence entre un CDD et un CDI ?", "should_trigger": false},
+  {"query": "What Excel formula sums column B only where column A says Paris?", "should_trigger": false},
+  {"query": "Give me a recipe for a vegetarian lasagna for six people", "should_trigger": false}
+]
