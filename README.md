@@ -10,4 +10,3 @@ Three modes:
 
 The skill lives in [`vibe-mentor/`](vibe-mentor/). To use it with Claude Code, copy that folder to `.claude/skills/vibe-mentor/`.
 
-The functional and technical specification (in French) is the `sp_cifications_...md` file.

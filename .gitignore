@@ -1,7 +1,6 @@
 # Publish only the skill and the spec: ignore everything else by default
 /*
 !/vibe-mentor/
-!/sp_cifications_techniques_et_fonctionnelles_skill_interactive_vibe_coding (1).md
 !/README.md
 !/.gitignore
 
