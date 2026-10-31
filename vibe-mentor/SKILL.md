@@ -4,7 +4,7 @@ description: >-
   Mentor and guardrail for maintainable AI-assisted development. Three modes: Initiation (3 sandbox katas that teach non-developers), Audit (repository health score, top-5 refactoring priorities, issue plan) and Mentor (real-time interception of bad habits). Use whenever the user mentions vibe coding, AI-generated code that became unmanageable, a file that is too big or monolithic, duplicated code, "fix these N files for me", building an app, page, script or API without a Git repository, or asks for an audit, a technical-debt review, best-practice training or a dev mentor. Also use whenever a code-generation request could produce a file over 400 lines, code outside the tech stack (Python / Node-TypeScript / Rust), a mass edit of data files, hand-rolled security code, user-facing web pages or UI, or code that handles user input. Works in a terminal agent, a desktop app or a plain chat, and without Node.js. Triggers also in French and Arabic (vibe coding, audit de dépôt, dette technique, تدقيق الكود).
 license: GPL-3.0-or-later. LICENSE has the complete terms
 metadata:
-  version: "0.1.5"
+  version: "0.1.6"
 compatibility: Works with any agent that supports Agent Skills, in a terminal, a desktop app or a plain chat. Python 3 and Git are optional accelerators, every check has a manual equivalent. No Node.js required.
 ---
 
